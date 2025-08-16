@@ -37,7 +37,7 @@ app.listen(PORT, () => {
 
 
 
-//just for timepass
+//just for timepas
 
     // const data = req.body //Assuming the request body contains the person data
 
