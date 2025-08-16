@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const db = require('./db');
 const MenuItem = require('./model/MenuItem');
+require('dotenv').config();
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());//req.body
@@ -21,7 +22,11 @@ app.get('/', function(req, res) {
 const personRoutes = require('./routes/personRoutes');
 app.use('/person', personRoutes);
 
-app.listen(3000, () => {
+const menuRoutes = require('./routes/menuRoutes');
+app.use('/menu', menuRoutes);
+
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
     console.log("Server is running on http://localhost:3000");
 });
 
@@ -32,7 +37,7 @@ app.listen(3000, () => {
 
 
 
-
+//just for timepass
 
     // const data = req.body //Assuming the request body contains the person data
 

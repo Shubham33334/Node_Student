@@ -1,9 +1,9 @@
-const expresS = require('express');
-const router = express.router();
+const express = require('express');
+const router = express.Router();
 const MenuItem = require('../model/MenuItem');
 
 
-router.post('/menu',  async(req, res) =>{
+router.post('/',  async(req, res) =>{
     try{
       const data = req.body;
       const newMenu = new MenuItem(data);
@@ -19,7 +19,7 @@ router.post('/menu',  async(req, res) =>{
 //get method
 
 
-router.get('/menu', async(req, res) =>{
+router.get('/', async(req, res) =>{
     try{
         const data = await MenuItem.find();
         console.log('data fetches');
