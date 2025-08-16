@@ -37,7 +37,7 @@ app.listen(PORT, () => {
 
 
 
-//commenting just for varification
+
 
     // const data = req.body //Assuming the request body contains the person data
 
