@@ -1,0 +1,33 @@
+const expresS = require('express');
+const router = express.router();
+const MenuItem = require('../model/MenuItem');
+
+
+router.post('/menu',  async(req, res) =>{
+    try{
+      const data = req.body;
+      const newMenu = new MenuItem(data);
+      const response = await newMenu.save();
+      console.log('Menu data received');
+      res.status(200).json(response);
+    }catch(err) {
+      console.log(err);
+      res.status(500).json({Error: 'Internal Sever Error hai bhai'});
+    }
+});
+
+//get method
+
+
+router.get('/menu', async(req, res) =>{
+    try{
+        const data = await MenuItem.find();
+        console.log('data fetches');
+        res.status(200).json(data);
+    }catch(err){
+        console.log(err);
+        res.status(500).json({error: 'Internal Server Error'})
+    }
+});
+
+module.exports = router;
