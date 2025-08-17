@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const MenuItem = require('../model/MenuItem');
+const { message } = require('prompt');
 
 
 router.post('/',  async(req, res) =>{
@@ -27,6 +28,22 @@ router.get('/', async(req, res) =>{
     }catch(err){
         console.log(err);
         res.status(500).json({error: 'Internal Server Error'})
+    }
+});
+
+router.get('/:taste', async(req, res)=>{
+    try{
+      const validTaste = ['sweet', 'sour','spicy'];
+      const {taste} = req.params;
+      //'sweet', 'spicy', 'sour'
+      if(!validTaste.includes(taste)) {
+        return res.status(400).json({message : 'Kindly choose valid taste'});
+      }
+      const response = await MenuItem.find({taste : taste});
+      return res.status(200).json(response);
+    }catch(err) {
+        console.log(err);
+        return res.status(500).json({error : 'Internal Server error'});
     }
 });
 
