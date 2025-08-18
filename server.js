@@ -29,12 +29,12 @@ app.get('/', passwordMiddleWare, function(req, res) {
 
 //Import the router files
 const personRoutes = require('./routes/personRoutes');
-app.use('/person', passwordMiddleWare, personRoutes);
+app.use('/person',passwordMiddleWare, personRoutes);
 
 const menuRoutes = require('./routes/menuRoutes');
 const Person = require('./model/Person');
 const { message } = require('prompt');
-app.use('/menu', passwordMiddleWare, menuRoutes);
+app.use('/menu',passwordMiddleWare, menuRoutes);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
