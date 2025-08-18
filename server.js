@@ -2,28 +2,39 @@ const express = require('express');
 const app = express();
 const db = require('./db');
 const MenuItem = require('./model/MenuItem');
+const passport = require('./auth');
 require('dotenv').config();
-
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());//req.body
 
-app.get('/', function(req, res) {
+
+
+const logRequest = (req, res, next) => {
+    console.log(`[${new Date().toLocaleString()}] Request Made to: ${req.originalUrl}`);
+    next();
+};
+
+
+
+app.use(logRequest);
+
+
+app.use(passport.initialize());
+
+
+const passwordMiddleWare = passport.authenticate('local', {session : false});
+app.get('/', passwordMiddleWare, function(req, res) {
     res.send('Welcom to my hotel... How i can help you');
 });
 
-
-
-
-
-
-
-
 //Import the router files
 const personRoutes = require('./routes/personRoutes');
-app.use('/person', personRoutes);
+app.use('/person', passwordMiddleWare, personRoutes);
 
 const menuRoutes = require('./routes/menuRoutes');
-app.use('/menu', menuRoutes);
+const Person = require('./model/Person');
+const { message } = require('prompt');
+app.use('/menu', passwordMiddleWare, menuRoutes);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
